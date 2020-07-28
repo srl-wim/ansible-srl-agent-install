@@ -1,0 +1,3 @@
+- name: deploy agent files on SRL
+  include_tasks: install.yml
+  loop: "{{ agents }}"

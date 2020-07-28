@@ -1,0 +1,42 @@
+# YML file
+- name: copy files to appmgr
+  become: true
+  become_exe: /usr/bin/sudo
+  copy:
+    src: "/home/henderiw/{{ item }}/yml/{{item}}.yml"
+    dest: "/opt/srlinux/appmgr/{{item}}.yml"
+    mode: "0644"
+
+# YANG/BINARY preparation
+- name: make directory /opt/user_agents/
+  become: true
+  become_exe: /usr/bin/sudo
+  file:
+    path: /opt/user_agents/
+    state: directory
+
+- name: make directory /opt/user_agents/{{item}}-yang
+  become: true
+  become_exe: /usr/bin/sudo
+  file:
+    path: "/opt/user_agents/{{item}}-yang"
+    state: directory
+
+# YANG
+- name: copy yang files to SRL user_agents directory
+  become: true
+  become_exe: /usr/bin/sudo
+  copy: 
+    src: "/home/henderiw/{{item}}/yang/"
+    dest: "/opt/user_agents/{{item}}-yang"
+    mode: "0644"
+    directory_mode: yes
+
+# BINARY
+- name: copy binary files to SRL user_agents directory
+  become: true
+  become_exe: /usr/bin/sudo
+  copy:
+    src: "/home/henderiw/{{item}}/build/{{item}}"
+    dest: "/opt/user_agents/{{item}}"
+    mode: "0755"
